@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
             }, child: ListTile(leading: Icon(CupertinoIcons.graph_square), iconColor: Colors.blueAccent, title: Text("Market cap"),)),
             PopupMenuItem(child: ListTile(onTap: () {
               setState(() {
-                state__ = 1;
+                state__ = 1;  
               });  
             }, leading: Icon(CupertinoIcons.money_dollar_circle), iconColor: Colors.blueAccent, title: Text("Wallet"),)),
             PopupMenuItem(child: ListTile(
