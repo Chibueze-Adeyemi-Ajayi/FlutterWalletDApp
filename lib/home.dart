@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
             PopupMenuItem(child: ListTile(onTap: () {
               setState(() {
                 state__ = 1;
-              });
+              });  
             }, leading: Icon(CupertinoIcons.money_dollar_circle), iconColor: Colors.blueAccent, title: Text("Wallet"),)),
             PopupMenuItem(child: ListTile(
               iconColor: Colors.blueAccent,
