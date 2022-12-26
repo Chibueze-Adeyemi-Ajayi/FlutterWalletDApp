@@ -44,17 +44,81 @@ class _HomePageState extends State<HomePage> {
         PopupMenuButton(
           color: Colors.white,
           itemBuilder: (context) {
-          return const <PopupMenuItem> [
-            PopupMenuItem(child: ListTile(leading: Icon(CupertinoIcons.graph_square), iconColor: Colors.blueAccent, title: Text("Market cap"),)),
-            PopupMenuItem(child: ListTile(leading: Icon(CupertinoIcons.money_dollar_circle), iconColor: Colors.blueAccent, title: Text("Wallet"),)),
-            PopupMenuItem(child: ListTile(leading: Icon(CupertinoIcons.info_circle), iconColor: Colors.blueAccent, title: Text("About"),))
+          return <PopupMenuItem> [
+            PopupMenuItem(onTap: () {
+              setState(() {
+                state__ = 0;
+              });
+            }, child: ListTile(leading: Icon(CupertinoIcons.graph_square), iconColor: Colors.blueAccent, title: Text("Market cap"),)),
+            PopupMenuItem(child: ListTile(onTap: () {
+              setState(() {
+                state__ = 1;
+              });
+            }, leading: Icon(CupertinoIcons.money_dollar_circle), iconColor: Colors.blueAccent, title: Text("Wallet"),)),
+            PopupMenuItem(child: ListTile(
+              iconColor: Colors.blueAccent,
+              leading: Icon(CupertinoIcons.arrow_up_circle),
+              title: Text("Transfer ETH"),
+            )),
+            PopupMenuItem(child: ListTile(
+              iconColor: Colors.blueAccent,
+              leading: Icon(CupertinoIcons.arrow_down_circle),
+              title: Text("Receive ETH"),
+            )),
+            PopupMenuItem(onTap: () {
+              setState(() {
+                state__ = 2;
+              });
+            }, child: ListTile(leading: Icon(CupertinoIcons.info_circle), iconColor: Colors.blueAccent, title: Text("About"),))
           ];
         })
       ],
         backgroundColor: Colors.blueAccent,
         title: const Text("EthereumWallet"),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {}, child: IconButton(onPressed: () {}, icon: Icon(CupertinoIcons.paperplane),),),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+         showModalBottomSheet(
+                              useRootNavigator: true,
+                              context: context, builder: (context) {
+                              return Container(
+                                padding: EdgeInsets.all(10),
+                                color: Colors.white, 
+                                child: Column(
+                                  children: [
+                                    Container(height: 20,),
+                                    Text("Ethereum Transfer", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35, color: Color.fromARGB(255, 59, 59, 59)),),
+                                    Container(height: 50,),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                        hintText: "Wallet Address",
+                                        label: Text("Receipent Ethereum Wallet Address"),
+                                        suffixIcon: Icon(Icons.card_giftcard, color: Colors.blueAccent,)
+                                      ),
+                                    ), Container(height: 20,),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                        hintText: "Amount of Ether",
+                                        label: Text("How much Ethereum to transfer"),
+                                        suffixIcon: Icon(Icons.currency_exchange_rounded, color: Colors.blueAccent,)
+                                      ),
+                                    ), Container(height: 20,),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10)),
+                                      onPressed: () {}, child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("SEND", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                                        Container(width: 20,),
+                                        Icon(Icons.send, color: Colors.white)
+                                      ],
+                                    ))
+                                  ],
+                                ),
+                              );
+                            });
+      }, child: Icon(CupertinoIcons.paperplane),),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white, elevation: 20,
         onTap: (value) {setState(() {

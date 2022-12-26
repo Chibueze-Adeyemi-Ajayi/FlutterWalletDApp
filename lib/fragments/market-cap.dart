@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class MarketCap extends StatelessWidget {
   const MarketCap({Key? key}) : super(key: key);
@@ -108,36 +107,54 @@ class _MyHomePageState extends State<MarketCapPage> {
                         IconButton(
                           tooltip: "Exchange",
                           onPressed: () {
-                            webview_controller = WebViewController()
-                            ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                            ..setBackgroundColor(const Color(0x00000000))
-                            ..setNavigationDelegate(
-                              NavigationDelegate(
-                                onProgress: (int progress) {
-                                  // Update loading bar.
-                                },
-                                onPageStarted: (String url) {},
-                                onPageFinished: (String url) {},
-                                onWebResourceError: (WebResourceError error) {},
-                                onNavigationRequest: (NavigationRequest request) {
-                                  if (request.url.startsWith('https://www.youtube.com/')) {
-                                    return NavigationDecision.prevent;
-                                  }
-                                  return NavigationDecision.navigate;
-                                },
-                              ),
-                            )
-                            ..loadRequest(Uri.parse('https://flutter.dev'));
-                            showCupertinoModalPopup(context: context, builder: (context) {
-                              return Container(
-                                padding: EdgeInsets.all(15), color: Colors.white,
-                                child: WebViewWidget(controller: webview_controller),
+                            var dialog = showDialog(context: context, builder: (context) {
+                              return AlertDialog(
+                                title: Text("Ethereum Exchange", style: TextStyle(color: Colors.blueAccent),),
+                                content: Text("Unfortunately this version can not exchange your, visit uniswap.com please"),
+                                actions: [TextButton(onPressed: () {
+                                  Navigator.of(context).pop();
+                                }, child: Row(children: [
+                                  Icon(Icons.close, color: Colors.blueAccent), Container(width: 10,),
+                                  Text("Close")
+                                ],))],
                               );
                             });
                           }, icon: Icon(CupertinoIcons.arrow_up_arrow_down_square_fill, size: 50, color: Colors.white,)),
                         IconButton(
                           tooltip: "Receiver",
-                          onPressed: () {}, icon: Icon(CupertinoIcons.arrow_down_circle_fill, size: 50, color: Colors.white,)),
+                          onPressed: () {
+                            var sheet_dialog = showModalBottomSheet(
+                              useRootNavigator: true,
+                              context: context, builder: (context) {
+                                return Column(
+                                  children: [
+                                    Container(height: 15,),
+                                    Text("Wallet Address", style: TextStyle(fontSize: 22),),Container(height: 15,),
+                                    Text("0xff467f24a1124vun0345", style: TextStyle(fontSize: 20),),Container(height: 15,),
+                                    Container(height: 15, decoration: BoxDecoration(
+                                      border: Border(bottom: BorderSide(color: Color.fromARGB(255, 199, 196, 196))),
+                                    ),),Container(height: 15,),
+                                    ListTile(
+                                      leading: Icon(Icons.copy, color: Colors.blueAccent,), title: Text("Copy Address"),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(CupertinoIcons.money_dollar_circle_fill,  color: Colors.blueAccent), title: Text("\$1,0000"),
+                                    ),Container(height: 5,),
+                                    Container(height: 15, decoration: BoxDecoration(
+                                      border: Border(bottom: BorderSide(color: Color.fromARGB(255, 233, 232, 232))),
+                                    ),),Container(height: 25,),
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(54, 16, 54, 16)),
+                                        backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      }, child: Text("Close", style: TextStyle(color: Colors.white, fontSize: 20),))
+                                  ],
+                                );
+                            });
+                          }, icon: Icon(CupertinoIcons.arrow_down_circle_fill, size: 50, color: Colors.white,)),
                       ],
                     )
                   ],

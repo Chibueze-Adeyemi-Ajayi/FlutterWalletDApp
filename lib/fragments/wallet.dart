@@ -57,13 +57,100 @@ class _MyWalletState extends State<MyWalletPage> {
                       children: [
                         IconButton(
                           tooltip: "Transfer",
-                          onPressed: () {}, icon: Icon(CupertinoIcons.arrow_up_circle_fill, size: 50, color: Colors.white,)),
+                          onPressed: () {
+                            showModalBottomSheet(
+                              useRootNavigator: true,
+                              context: context, builder: (context) {
+                              return Container(
+                                padding: EdgeInsets.all(10),
+                                color: Colors.white, 
+                                child: Column(
+                                  children: [
+                                    Container(height: 20,),
+                                    Text("Ethereum Transfer", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 35, color: Color.fromARGB(255, 59, 59, 59)),),
+                                    Container(height: 50,),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                        hintText: "Wallet Address",
+                                        label: Text("Receipent Ethereum Wallet Address"),
+                                        suffixIcon: Icon(Icons.card_giftcard, color: Colors.blueAccent,)
+                                      ),
+                                    ), Container(height: 20,),
+                                    TextField(
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.blueAccent)),
+                                        hintText: "Amount of Ether",
+                                        label: Text("How much Ethereum to transfer"),
+                                        suffixIcon: Icon(Icons.currency_exchange_rounded, color: Colors.blueAccent,)
+                                      ),
+                                    ), Container(height: 20,),
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10)),
+                                      onPressed: () {}, child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Text("SEND", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                                        Container(width: 20,),
+                                        Icon(Icons.send, color: Colors.white)
+                                      ],
+                                    ))
+                                  ],
+                                ),
+                              );
+                            });
+                          }, icon: Icon(CupertinoIcons.arrow_up_circle_fill, size: 50, color: Colors.white,)),
                         IconButton(
                           tooltip: "Exchange",
-                          onPressed: () {}, icon: Icon(CupertinoIcons.arrow_up_arrow_down_square_fill, size: 50, color: Colors.white,)),
+                          onPressed: () {
+                            var dialog = showDialog(context: context, builder: (context) {
+                              return AlertDialog(
+                                title: Text("Ethereum Exchange", style: TextStyle(color: Colors.blueAccent),),
+                                content: Text("Unfortunately this version can not exchange your, visit uniswap.com please"),
+                                actions: [TextButton(onPressed: () {
+                                  Navigator.of(context).pop();
+                                }, child: Row(children: [
+                                  Icon(Icons.close, color: Colors.blueAccent), Container(width: 10,),
+                                  Text("Close")
+                                ],))],
+                              );
+                            });
+                          }, icon: Icon(CupertinoIcons.arrow_up_arrow_down_square_fill, size: 50, color: Colors.white,)),
                         IconButton(
                           tooltip: "Receiver",
-                          onPressed: () {}, icon: Icon(CupertinoIcons.arrow_down_circle_fill, size: 50, color: Colors.white,)),
+                          onPressed: () {
+                            var sheet_dialog = showModalBottomSheet(
+                              useRootNavigator: true,
+                              context: context, builder: (context) {
+                                return Column(
+                                  children: [
+                                    Container(height: 15,),
+                                    Text("Wallet Address", style: TextStyle(fontSize: 22),),Container(height: 15,),
+                                    Text("0xff467f24a1124vun0345", style: TextStyle(fontSize: 20),),Container(height: 15,),
+                                    Container(height: 15, decoration: BoxDecoration(
+                                      border: Border(bottom: BorderSide(color: Color.fromARGB(255, 199, 196, 196))),
+                                    ),),Container(height: 15,),
+                                    ListTile(
+                                      leading: Icon(Icons.copy, color: Colors.blueAccent,), title: Text("Copy Address"),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(CupertinoIcons.money_dollar_circle_fill,  color: Colors.blueAccent), title: Text("\$1,0000"),
+                                    ),Container(height: 5,),
+                                    Container(height: 15, decoration: BoxDecoration(
+                                      border: Border(bottom: BorderSide(color: Color.fromARGB(255, 233, 232, 232))),
+                                    ),),Container(height: 25,),
+                                    TextButton(
+                                      style: ButtonStyle(
+                                        padding: MaterialStateProperty.all(EdgeInsets.fromLTRB(54, 16, 54, 16)),
+                                        backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      }, child: Text("Close", style: TextStyle(color: Colors.white, fontSize: 20),))
+                                  ],
+                                );
+                            });
+                          }, icon: Icon(CupertinoIcons.arrow_down_circle_fill, size: 50, color: Colors.white,)),
                       ],
                     ),
                   ],
