@@ -1,11 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+var data__;
+
 class MarketCap extends StatelessWidget {
-  const MarketCap({Key? key}) : super(key: key);
+  const MarketCap({Key? key, required this.data}) : super(key: key);
   // This widget is the root of your application.
+  final data;
   @override
   Widget build(BuildContext context) {
+    data__ = this.data;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -25,8 +29,21 @@ class MarketCapPage extends StatefulWidget {
 
 class _MyHomePageState extends State<MarketCapPage> {
 
+  var usd_price, btc_price, xrp_price, bnb_price, ltc_price;
+
   @override
   void initState() {
+    //print(data__);
+    usd_price = data__[0]; usd_price = usd_price.toString();
+    usd_price = usd_price.substring(4);
+    btc_price = data__[1]; btc_price = btc_price.toString();
+    btc_price = btc_price.substring(4);
+    xrp_price = data__[2]; xrp_price = xrp_price.toString();
+    xrp_price = xrp_price.substring(4);
+    bnb_price = data__[3]; bnb_price = bnb_price.toString();
+    bnb_price = bnb_price.substring(4);
+    ltc_price = data__[4]; ltc_price = ltc_price.toString();
+    ltc_price = ltc_price.substring(4);
     super.initState();
   }
 
@@ -54,7 +71,7 @@ class _MyHomePageState extends State<MarketCapPage> {
                   children: [
                     Text("Market Cap", style: TextStyle(color: Colors.white, fontSize: 20),),
                     Container(height: 20,),
-                    Text("1,000USD", style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold),),
+                    Text("${usd_price}USD", style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold),),
                     Container(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly, crossAxisAlignment: CrossAxisAlignment.center,
@@ -170,7 +187,7 @@ class _MyHomePageState extends State<MarketCapPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                         Text("BTC", style: TextStyle(fontSize: 25),),
-                        Text("0.175BTC",  style: TextStyle(fontSize: 18),),
+                        Text("${btc_price}BTC",  style: TextStyle(fontSize: 18),),
                       ],)
                     ],
                   ),
@@ -188,7 +205,7 @@ class _MyHomePageState extends State<MarketCapPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                         Text("BNB", style: TextStyle(fontSize: 25),),
-                        Text("1.471BNB",  style: TextStyle(fontSize: 18),),
+                        Text("${bnb_price}BNB",  style: TextStyle(fontSize: 18),),
                       ],)
                     ],
                   ),
@@ -208,7 +225,7 @@ class _MyHomePageState extends State<MarketCapPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                         Text("XRP", style: TextStyle(fontSize: 25),),
-                        Text("0.01471XRP",  style: TextStyle(fontSize: 18),),
+                        Text("${xrp_price}XRP",  style: TextStyle(fontSize: 18),),
                       ],)
                     ],
                   ),
@@ -227,7 +244,7 @@ class _MyHomePageState extends State<MarketCapPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                         Text("LTC", style: TextStyle(fontSize: 25),),
-                        Text("1.471LTC",  style: TextStyle(fontSize: 18),),
+                        Text("${ltc_price}LTC",  style: TextStyle(fontSize: 18),),
                       ],)
                     ],
                   ),

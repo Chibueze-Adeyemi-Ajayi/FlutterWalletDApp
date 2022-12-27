@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:etherum_wallet_mobile_app/fragments/about.dart';
 import 'package:etherum_wallet_mobile_app/fragments/market-cap.dart';
 import 'package:etherum_wallet_mobile_app/fragments/wallet.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -27,13 +30,42 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+Future<dynamic> market_cap_loader () async {
+   String url = "https://ethereum-web3-server.onrender.com/marketprice";
+   var response = await http.post(Uri.parse(url));
+  var data = json.decode(response.body);
+   return data;
+}
+
 class _HomePageState extends State<HomePage> {
 
   int state__ = 0;
-  List fragments = const <Widget> [
-    MarketCap(), MyWallet(), About()
+  List fragments = <Widget> [
+    FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+           if (snapshot.hasError) {
+            return Center(child: Icon(Icons.error, color: Colors.redAccent, size: 25,),);
+           } else {
+             return MarketCap(data: snapshot.data);
+           }
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+      future: market_cap_loader(),),
+   
+    MyWallet(), 
+    About()
   ];
  
+  @override
+  void initState() {
+    print(market_cap_loader());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

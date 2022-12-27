@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:etherum_wallet_mobile_app/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,7 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
  
   @override
   void initState() {
-    // TODO: implement initState
     Timer(const Duration(seconds: 5), () {
       setState(() {
         screen = 1;
