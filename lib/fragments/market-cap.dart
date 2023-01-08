@@ -51,6 +51,7 @@ class _MyHomePageState extends State<MarketCapPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(data__);
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(color: Colors.white),
@@ -71,7 +72,7 @@ class _MyHomePageState extends State<MarketCapPage> {
                   children: [
                     Text("Market Cap", style: TextStyle(color: Colors.white, fontSize: 20),),
                     Container(height: 20,),
-                    Text("${usd_price}USD", style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold),),
+                    Text("${usd_price} USD", style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.bold),),
                     Container(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly, crossAxisAlignment: CrossAxisAlignment.center,

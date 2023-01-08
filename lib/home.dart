@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
+  const Home({Key? key, required String this.address, required String this.private_key}) : super(key: key);
+  final address; final private_key;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -30,10 +30,20 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+dynamic market_price = "";
+
 Future<dynamic> market_cap_loader () async {
    String url = "https://ethereum-web3-server.onrender.com/marketprice";
    var response = await http.post(Uri.parse(url));
-  var data = json.decode(response.body);
+   var data = json.decode(response.body);
+   market_price = data;
+   return data;
+}
+
+Future<dynamic> load_wallet () async {
+   String url = "https://ethereum-web3-server.onrender.com/marketprice";
+   var response = await http.post(Uri.parse(url));
+   var data = json.decode(response.body);
    return data;
 }
 
@@ -55,7 +65,18 @@ class _HomePageState extends State<HomePage> {
         );
       },
       future: market_cap_loader(),),
-   
+    FutureBuilder(
+      future: load_wallet(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (!snapshot.hasError) {
+            return Text("Hola");
+          } else {
+            return Center(child: Icon(Icons.error, color: Colors.redAccent));
+          }
+        }
+        return Center(child: CircularProgressIndicator());
+    }),
     MyWallet(), 
     About()
   ];
